@@ -4,6 +4,10 @@
 Created on Wed Apr  5 22:05:21 2017
 
 @author: apm13
+
+Playing with tensorflow and cloud ML engine,
+https://medium.com/google-cloud/how-to-do-time-series-prediction-using-rnns-and-tensorflow-and-cloud-ml-engine-2ad2eeb189e8
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
