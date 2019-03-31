@@ -8,19 +8,25 @@
 #
 
 library(shiny)
+library(dplyr)
+library(ggplot2)
 
-# Define server logic required to draw a histogram
+data <- read.csv('data/events.csv')
+
+# Get the count of events for all countries in each year
+country_year_group_count <- data %>%
+  group_by(COUNTRY, BYEAR) %>%
+  tally() 
+
+
+# Define server logic required to draw series chart
 shinyServer(function(input, output) {
    
-  output$distPlot <- renderPlot({
+  output$plot1 <- renderPlot({
     
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    
+    ggplot(country_year_group_count %>% filter(COUNTRY %in% input$country_name), aes(x = BYEAR, y = n)) + 
+      geom_line(aes(color = COUNTRY), size = 1) +
+      theme_minimal()
   })
   
 })
